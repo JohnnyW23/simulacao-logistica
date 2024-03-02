@@ -99,7 +99,7 @@ class Van():
         for _ in range(len(self.entrega)):
             endereco = Endereço(self.centro.bairro, self.centro.estado)
             chance = randint(1, 100)
-            if chance < 5:
+            if chance < 16:
                 self.entrega[0].values() == False
                 self.devolver.append(self.entrega[0])
                 self.entrega.pop(0)
