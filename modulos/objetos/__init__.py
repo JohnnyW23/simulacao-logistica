@@ -1,4 +1,4 @@
-from log import UnidadeDeTratamento, CentroDeDistribuicao
+from modulos.classes import UnidadeDeTratamento, CentroDeDistribuicao
 
 riodejaneiro = UnidadeDeTratamento('Rio de Janeiro')
 rj = riodejaneiro

@@ -1,6 +1,6 @@
 from time import sleep
-from ut_estoque import estoque_ut
-from cd_estoque import estoque_cd
+from estoques.ut_estoque import estoque_ut
+from estoques.cd_estoque import estoque_cd
 itens_cd = []
 itens_ut = []
 for item in estoque_cd:

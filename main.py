@@ -1,5 +1,4 @@
-from objetos import *
-from random import choice
+from modulos.objetos import estados, dias
 from time import sleep
 
 for dia in dias:
