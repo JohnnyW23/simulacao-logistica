@@ -12,19 +12,21 @@ estoque_cd = itens_cd
 
 
 class Caminhao():
-    def __init__(self, unidade, estoque=50):
+    def __init__(self, unidade, estoque=1000):
         self.unidade = unidade
         self.estoque = estoque
         self.carga = []
 
     def enviar_itens(self, destino):
-        from random import choice
+        from random import choice, randint
+        envios = 0
         if len(destino.itens) < destino.estoque:
             if len(self.unidade.itens) > 0:
-                for _ in range(self.estoque):
+                for _ in range(randint(self.estoque - self.estoque // 5, self.estoque)):
                     item = choice(self.unidade.itens)
                     self.carga.append(item)
                     self.unidade.itens.remove(item)
+                    envios += 1
                     if len(self.unidade.itens) == 0:
                         print(f'{self.unidade.local} sem mais itens restantes.')
                         break
@@ -36,7 +38,7 @@ class Caminhao():
                         break
                 print(f'''\033[36mENVIO DE MERCADORIAS\033[m
 
-Mercadorias transferidas:
+Mercadorias transferidas: \033[36m{envios}\033[m
 {self.unidade.local} >>> {destino.local}''')
                 if len(self.carga) > 0:
                     print(self.carga)
@@ -79,7 +81,7 @@ Estoque de {self.unidade.estado.local}: {len(self.unidade.estado.itens)}''')
 
 
 class Van():
-    def __init__(self, centro, estoque=10):
+    def __init__(self, centro, estoque=300):
         self.centro = centro
         self.estoque = estoque
         self.entrega = []
@@ -87,7 +89,7 @@ class Van():
     
     def fazer_entrega(self):
         from random import choice, randint
-        for _ in range(self.estoque):
+        for _ in range(randint(self.estoque - self.estoque // 5, self.estoque)):
             item = choice(self.centro.itens)
             self.entrega.append(item)
             self.centro.itens.remove(item)
@@ -138,7 +140,7 @@ class UnidadeDeTratamento():
     def __init__(self, estado):
         self.estado = estado
         self.local = f'\033[35mUT {estado}\033[m'
-        self.estoque = 5000
+        self.estoque = 90000
         self.itens = estoque_ut[:]
         self.transporte = Caminhao(self)
 
@@ -148,7 +150,7 @@ class CentroDeDistribuicao():
         self.local = f'\033[33mCD {bairro}\033[m'
         self.bairro = bairro
         self.estado = estado
-        self.estoque = 500
+        self.estoque = 20000
         self.itens = estoque_cd[:]
         self.transporte = Caminhao(self)
         self.entrega = Van(self)
