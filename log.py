@@ -117,7 +117,9 @@ Devoluções: {devolvido}
 =====================================''')
         sleep(1)
         if len(self.devolver) > 0:
-            self.devolver_entrega(self.devolver)
+            devolucao = self.devolver[:]
+            self.devolver.clear()
+            self.devolver_entrega(devolucao)
     
     def devolver_entrega(self, devolucao):
         if len(self.centro.itens) < self.centro.estoque:
