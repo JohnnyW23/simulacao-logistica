@@ -50,3 +50,10 @@ Es = {espiritosanto:
     }
 
 estados = [Rj, Sp, Mg, Es]
+
+dias = ['SEGUNDA-FEIRA',
+        'TERÇA-FEIRA',
+        'QUARTA-FEIRA',
+        'QUINTA-FEIRA',
+        'SEXTA-FEIRA',
+        'SÁBADO']

@@ -75,8 +75,6 @@ Estoque de {destino.local}: {len(destino.itens)}''')
 Estoque de {self.unidade.local}: {len(self.unidade.itens)}
 Estoque de {self.unidade.estado.local}: {len(self.unidade.estado.itens)}''')
         else: print(f'Operação não suportada: Estoque de {self.unidade.estado.local} cheio!')
-        print('''
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~''')
         sleep(1)
 
 
@@ -99,7 +97,7 @@ class Van():
         tentativas = len(self.entrega)
         for _ in range(len(self.entrega)):
             endereco = Endereço(self.centro.bairro, self.centro.estado)
-            chance = randint(1, 6)
+            chance = randint(1, 10)
             if chance == 1:
                 self.entrega[0].values() == False
                 self.devolver.append(self.entrega[0])

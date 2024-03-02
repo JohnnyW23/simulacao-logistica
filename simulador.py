@@ -2,26 +2,25 @@ from objetos import *
 from random import choice
 from time import sleep
 
-while True:
-    try:
-        rounds = int(input('Defina o número de rounds para simulação: '))
-        break
-    except ValueError:
-        print('Valor inválido! Digite um número inteiro')
-        continue
+for dia in dias:
+    for dicio in estados:
+        estado = list(dicio.keys())[0]
+        centros = dicio[estado]
+        print('''
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+''')
+        print(f'''\033[36m{dia}\033[m - \033[35m{estado.estado.upper()}\033[m'''.center(52))
+        print()
+        sleep(1)
 
-print('''
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~''')
-for _ in range(rounds):
-    estado = choice(estados)
-    agente1 = list(estado.keys())[0]
-    agente2 = choice(estado[agente1])
-    agente1.transporte.enviar_itens(agente2)
-    print('''
+        for centro in centros:
+            print('\033[34m=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=\033[m')
+            estado.transporte.enviar_itens(centro)
+            print('''
 =====================================''')
-    agente2.entrega.fazer_entrega()
+            centro.entrega.fazer_entrega()
+            sleep(2)
+    
 
-
-    sleep(3)
-
-print('FIM DA SIMULAÇÃO.')
+print('<<< FIM DA SIMULAÇÃO >>>')
+print()
