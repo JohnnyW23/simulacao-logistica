@@ -19,7 +19,6 @@ for dia in dias:
 =====================================''')
             centro.entrega.fazer_entrega()
             sleep(2)
-    
 
 print('<<< FIM DA SIMULAÇÃO >>>')
 print()
