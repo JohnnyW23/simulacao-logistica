@@ -1,4 +1,6 @@
 from modulos.objetos import estados, dias
+from estoques.storages import (load_unidade_estoque,
+                               dump_unidade_estoque)
 from time import sleep
 
 print('''\033[33m
@@ -9,6 +11,7 @@ while True:
             for dicio in estados:
                 estado = list(dicio.keys())[0]
                 centros = dicio[estado]
+                estado.itens = load_unidade_estoque(estado)
                 print('''
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         ''')
@@ -19,6 +22,7 @@ while True:
                 for centro in centros:
                     estado.transporte.enviar_itens(centro)
                     centro.entrega.fazer_entrega()
+                    estado.itens = dump_unidade_estoque(estado)
                     sleep(2)
     except KeyboardInterrupt:
         print('''
