@@ -36,6 +36,7 @@ class Caminhao():
                     if len(destino.itens) == destino.estoque:
                         print(f'Estoque de {destino.local} totalmente abastecido.')
                         break
+                print('\033[34m=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=\033[m')
                 print(f'''\033[36mENVIO DE MERCADORIAS\033[m
 
 Mercadorias transferidas: \033[36m{envios}\033[m
@@ -97,8 +98,8 @@ class Van():
         tentativas = len(self.entrega)
         for _ in range(len(self.entrega)):
             endereco = Endereço(self.centro.bairro, self.centro.estado)
-            chance = randint(1, 10)
-            if chance == 1:
+            chance = randint(1, 100)
+            if chance < 5:
                 self.entrega[0].values() == False
                 self.devolver.append(self.entrega[0])
                 self.entrega.pop(0)
@@ -106,6 +107,8 @@ class Van():
             else:
                 self.entrega.pop(0)
                 entregue += 1
+        print('''
+=====================================''')
         print(f'''\033[36mENTREGA EM DOMICÍLIOS\033[m
 
 {tentativas} tentativas de entrega em:
@@ -113,8 +116,7 @@ class Van():
 
 Entregues: {entregue}
 Devoluções: {devolvido}
-
-=====================================''')
+''')
         sleep(1)
         if len(self.devolver) > 0:
             devolucao = self.devolver[:]
@@ -128,6 +130,7 @@ Devoluções: {devolvido}
                 if len(self.centro.itens) == self.centro.estoque:
                     print(f'Estoque de {self.centro.local} totalmente abastecido.')
                     break
+            print('''=====================================''')
             print(f'''\033[36mDEVOLUÇÃO DE ITENS\033[m
 ''')
             self.centro.transporte.devolver_itens(devolucao)

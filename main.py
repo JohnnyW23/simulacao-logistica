@@ -13,10 +13,7 @@ for dia in dias:
         sleep(1)
 
         for centro in centros:
-            print('\033[34m=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=\033[m')
             estado.transporte.enviar_itens(centro)
-            print('''
-=====================================''')
             centro.entrega.fazer_entrega()
             sleep(2)
 
