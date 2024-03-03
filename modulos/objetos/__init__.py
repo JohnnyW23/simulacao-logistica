@@ -1,10 +1,13 @@
-from modulos.classes import UnidadeDeTratamento, CentroDeDistribuicao
+from modulos.classes import (UnidadeDeTratamento,
+                             CentroDeDistribuicao,
+                             Caminhao,
+                             Van)
 
 riodejaneiro = UnidadeDeTratamento('Rio de Janeiro')
 rj = riodejaneiro
 
-santacruz = CentroDeDistribuicao('Santa Cruz', rj)
 campogrande = CentroDeDistribuicao('Campo Grande', rj)
+santacruz = CentroDeDistribuicao('Santa Cruz', rj)
 bangu = CentroDeDistribuicao('Bangu', rj)
 botafogo = CentroDeDistribuicao('Botafogo', rj)
 
@@ -34,7 +37,7 @@ serra = CentroDeDistribuicao('Serra', es)
 
 
 Rj = {riodejaneiro: 
-        [santacruz, campogrande, bangu, botafogo]
+        [campogrande, santacruz, bangu, botafogo]
     }
 
 Sp = {saopaulo:
@@ -57,3 +60,6 @@ dias = ['SEGUNDA-FEIRA',
         'QUINTA-FEIRA',
         'SEXTA-FEIRA',
         'SÁBADO']
+
+caminhao = Caminhao()
+van = Van()

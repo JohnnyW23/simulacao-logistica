@@ -1,13 +1,15 @@
-from modulos.objetos import estados, dias
-from arquivos_json.storages import (load_unidade_estoque,
-                               dump_unidade_estoque,
-                               load_centro_estoque,
-                               dump_centro_estoque)
+from modulos.objetos import estados, dias, campogrande, caminhao, van
+from arquivos_json.save_and_load import (load_unidade_estoque,
+                                        dump_unidade_estoque,
+                                        load_centro_estoque,
+                                        dump_centro_estoque)
+
 from time import sleep
 
 print('''\033[33m
 <<< CTRL + C para interromper >>>\033[m
 ''')
+
 while True:
     try:
         for dia in dias:
@@ -23,10 +25,13 @@ while True:
 
                 for centro in centros:
                     centro.itens = load_centro_estoque(centro)
-                    estado.transporte.enviar_itens(centro)
-                    centro.entrega.fazer_entrega()
+                    caminhao.enviar_itens(estado, centro)
+                    valor, devolucao = van.fazer_entrega(centro)
+                    if valor == 'devolver':
+                        van.devolver_entrega(devolucao, centro)
+                        caminhao.devolver_itens(devolucao, centro)
                     if len(centro.itens) < 3000:
-                        estado.transporte.abastecer_centro(centro)
+                        caminhao.abastecer_centro(estado, centro)
                     if len(estado.itens) < 5000:
                         estado.abastecer_unidade()
                     dump_centro_estoque(centro)
