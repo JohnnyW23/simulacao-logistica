@@ -7,3 +7,11 @@ que enviam mercadorias através de seus caminhões para os Centros de Distribui�
 as residências do local daquele centro. Devoluções podem acontecer, e nesse caso a mercadoria faz todo o caminho oposto.  
 A cada dia da semana, é mostrado as operações entre todas as Unidades de Tratamento e seus respectivos Centros de Distribuição, com estes,
 por fim, entregando nas residências ou levando de volta para devolução.
+
+# Salvamento de estado
+O programa salva automaticamente o estado da simulação a cada vez que se passa um dia, preservando o estoque de todas as Unidades
+e Centros. Também salva em qual semana a simulação está. A semana é atualizada depois que o sábado (último dia da semana de atividades) termina.
+
+# Opção de resetar
+Caso desejado, você pode resetar todos os dados salvos indo no programa "resetar.py" e executando. Apenas os arquivos .json dos
+estoques seão resetados, e os arquivos .json referentes ao tempo serão modificados para o padrão determinado pela programação.
