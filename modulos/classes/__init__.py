@@ -2,9 +2,9 @@ from time import sleep
 from estoques.ut_estoque import estoque_ut
 from estoques.cd_estoque import estoque_cd
 
-abastecimento_ut = {'item': True}
+mercadoria = {'item': True}  # Item padrão.
 wrn = '\033[31m#\033[m'
-
+# ^^^^ Só pra melhorar a estética do código quando uma mensagem de aviso ocorrer.
 
 class Caminhao():
     def __init__(self, estoque=750, carga=[]):
@@ -12,40 +12,36 @@ class Caminhao():
         self.carga = carga
 
     def enviar_itens(self, remetente, destino):
-        from random import choice, randint
+        from random import randint
         print('\033[34m=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=\033[m')
         print(f'''\033[36mENVIO DE MERCADORIAS\033[m''')
         envios = 0
-        if len(destino.itens) < destino.estoque:
-            if len(remetente.itens) > 0:
-                for _ in range(randint(self.estoque - self.estoque // 5, self.estoque) * 4):
-                    item = choice(remetente.itens)
-                    self.carga.append(item)
-                    remetente.itens.remove(item)
-                    envios += 1
-                    if len(remetente.itens) == 0:
-                        print(f'''
+        if len(destino.itens) < destino.estoque:  # Examina se o estoque do CD não estará cheio. Chance quase nula, mas possível.
+            for _ in range(randint(self.estoque - self.estoque // 5, self.estoque) * 4):
+                self.carga.append(mercadoria)  # Enchendo caminhões com itens da UT.
+                remetente.itens.pop(0)
+                envios += 1
+                if len(remetente.itens) == 0:
+                    print(f'''
 {wrn} {remetente.local} sem mais itens restantes! {wrn}''')
-                        break
-                for _ in range(len(self.carga)):
-                    destino.itens.append(self.carga[0])
-                    self.carga.pop(0)
-                    if len(destino.itens) == destino.estoque:
-                        print(f'Estoque de {destino.local} totalmente abastecido.')
-                        break
-                print(f'''
+                    break
+            for _ in range(len(self.carga)):
+                destino.itens.append(self.carga[0])  # Descarregando carga dos caminhões no CD.
+                self.carga.pop(0)
+                if len(destino.itens) == destino.estoque:
+                    print(f'Estoque de {destino.local} totalmente abastecido.')
+                    break
+            print(f'''
 Mercadorias transferidas: \033[36m{envios}\033[m
 {remetente.local} >>> {destino.local}''')
-                if len(self.carga) > 0:
-                    print(self.carga)
-                    remetente.itens.extend(self.carga)
-                    self.carga = []
-                    print(f'Carga restante de {remetente.local} devolvida.')
-                print(f'''
+            if len(self.carga) > 0:
+                print(self.carga)
+                remetente.itens.extend(self.carga)
+                self.carga = []
+                print(f'Carga restante de {remetente.local} devolvida.')
+            print(f'''
 Estoque de {remetente.local}: {len(remetente.itens)}
 Estoque de {destino.local}: {len(destino.itens)}''')
-            else: print(f'''{wrn }Transferência não suportada:
-Não há itens no estoque de {remetente.local}! {wrn}''')
         else: print(f'''
 {wrn} Operação não suportada:
 Estoque de {destino.local} cheio! {wrn}''')
@@ -80,12 +76,13 @@ Estoque de {remetente.estado.local}: {len(remetente.estado.itens)}
         sleep(1)
 
     def abastecer_centro(self, remetente, destino):
-        from random import choice
+        from random import choice, randint
         print('''=====================================
 \033[36mABASTECIMENTO DO CD\033[m''')
         envios = 0
         if len(remetente.itens) > 0:
-            for _ in range(12000, 16000):
+            quantidade = randint(12000, 16000)
+            for _ in range(quantidade):
                 item = choice(remetente.itens)
                 self.carga.append(item)
                 remetente.itens.remove(item)
@@ -124,11 +121,10 @@ class Van():
         self.devolver = devolver
     
     def fazer_entrega(self, remetente):
-        from random import choice, randint
+        from random import randint
         for _ in range(randint(self.estoque - self.estoque // 5, self.estoque) * 35):
-            item = choice(remetente.itens)
-            self.entrega.append(item)
-            remetente.itens.remove(item)
+            self.entrega.append(mercadoria)
+            remetente.itens.pop(0)
             if len(remetente.itens) == 0:
                 break
         entregue = devolvido = 0
@@ -151,7 +147,7 @@ class Van():
 {tentativas} tentativas de entrega em:
 {endereco.endereco}
 
-Entregues: {entregue}
+Entregas: {entregue}
 Devoluções: {devolvido}
 ''')
         sleep(1)
@@ -185,11 +181,9 @@ class UnidadeDeTratamento():
         print('''=====================================
 \033[36mABASTECIMENTO DA UT\033[m''')
         recebimento = 0
-        abastecimento1 = randint(30000, 40000)
-        abastecimento2 = randint(30000, 40000)
-        abastecimento3 = abastecimento1 + abastecimento2
-        for _ in range(abastecimento3):
-            self.itens.append(abastecimento_ut)
+        abastecimento = randint(60000, 80000)
+        for _ in range(abastecimento):
+            self.itens.append(mercadoria)  # O item padrão denominado lá no início.
             recebimento += 1
         print(f'''
 Mercadorias para abastecimento: \033[36m{recebimento}\033[m
