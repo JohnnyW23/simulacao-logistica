@@ -6,9 +6,9 @@ from modulos.classes import (UnidadeDeTratamento,
 riodejaneiro = UnidadeDeTratamento('Rio de Janeiro')
 rj = riodejaneiro
 
-campogrande = CentroDeDistribuicao('Campo Grande', rj)
-santacruz = CentroDeDistribuicao('Santa Cruz', rj)
-bangu = CentroDeDistribuicao('Bangu', rj)
+copacabana = CentroDeDistribuicao('Copacabana', rj)
+ipanema = CentroDeDistribuicao('Ipanema', rj)
+lapa = CentroDeDistribuicao('Lapa', rj)
 botafogo = CentroDeDistribuicao('Botafogo', rj)
 
 saopaulo = UnidadeDeTratamento('São Paulo')
@@ -35,9 +35,8 @@ vilavelha = CentroDeDistribuicao('Vila Velha', es)
 cariacica = CentroDeDistribuicao('Cariacica', es)
 serra = CentroDeDistribuicao('Serra', es)
 
-
 Rj = {riodejaneiro: 
-        [campogrande, santacruz, bangu, botafogo]
+        [copacabana, ipanema, lapa, botafogo]
     }
 
 Sp = {saopaulo:

@@ -108,10 +108,12 @@ Mercadorias para abastecimento: \033[36m{envios}\033[m
 Carga restante de {remetente.local} devolvida.\033[m''')
             print(f'''
 Estoque de {remetente.local}: {len(remetente.itens)}
-Estoque de {destino.local}: {len(destino.itens)}''')
+Estoque de {destino.local}: {len(destino.itens)}
+''')
         else: print(f'''
 {wrn} Transferência não suportada:
-Não há itens no estoque de {remetente.local}! {wrn}''')
+Não há itens no estoque de {remetente.local}! {wrn}
+''')
         sleep(1)
 
 
@@ -193,7 +195,8 @@ class UnidadeDeTratamento():
 Mercadorias para abastecimento: \033[36m{recebimento}\033[m
 >>> {self.local}
 
-Estoque de {self.local}: {len(self.itens)}''')
+Estoque de {self.local}: {len(self.itens)}
+''')
         sleep(1)
 
 
