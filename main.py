@@ -1,10 +1,18 @@
-from modulos.objetos import estados, dias, caminhao, van
-from arquivos_json.save_and_load import (load_unidade_estoque,
-                                        dump_unidade_estoque,
-                                        load_centro_estoque,
-                                        dump_centro_estoque,
-                                        salvar_dia, carregar_dia,
-                                        salvar_semana, carregar_semana)
+from modulos.objetos import (
+    estados,
+    dias,
+    caminhao,
+    van
+    )
+from arquivos_json.save_and_load import (
+    load_unidade_estoque,
+    dump_unidade_estoque,
+    load_centro_estoque,
+    dump_centro_estoque,
+    salvar_dia, carregar_dia,
+    salvar_semana, carregar_semana
+    )
+
 days = dias[:]
 from time import sleep
 print('''\033[33m
