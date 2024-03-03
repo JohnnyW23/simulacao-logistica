@@ -1,8 +1,8 @@
-filename = '50000lines_itens.txt'
+filename = 'gerador_de_itens/50000lines_itens.txt'
 itens = []
 with open(filename) as f:
     for linha in f:
-        itens.append(linha.strip())
+        itens.append({'item': True})
 
-with open('10000_itens.txt', 'a') as f:
-    f.write(str(itens[:10000]))
+with open('gerador_de_itens/40000_itens.txt', 'a') as f:
+    f.write(str(itens[:40000]))
