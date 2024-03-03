@@ -1,5 +1,5 @@
 # simulacao-logistica
-Visando estudar o funcionamento de classes, criei esse programa para auxiliar em meu aprendizado.
+Visando estudar o funcionamento de classes e arquivos .json, criei esse programa para auxiliar em meu aprendizado.
 
 # Como funciona?
 É um programa que simula o envio e devolução de mercadorias através de um sistema de entregas. Foram criados 4 Unidades de Tratamento,
