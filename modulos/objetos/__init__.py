@@ -60,5 +60,7 @@ dias = ['SEGUNDA-FEIRA',
         'SEXTA-FEIRA',
         'SÁBADO']
 
+semana = 1
+
 caminhao = Caminhao()
 van = Van()

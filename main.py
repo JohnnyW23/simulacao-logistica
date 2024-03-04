@@ -1,6 +1,7 @@
 from modulos.objetos import (
     estados,
     dias,
+    semana,
     caminhao,
     van
     )
@@ -13,17 +14,14 @@ from arquivos_json.save_and_load import (
     salvar_semana, carregar_semana
     )
 
-days = dias[:]
 from time import sleep
 print('''\033[33m
 <<< CTRL + C para interromper >>>\033[m
 ''')
 while True:
     try:
-        semana = carregar_semana()
-        dias = carregar_dia()
-        if dias == None:  # ou seja, se ainda não houve salvamento do dia
-            dias = days
+        semana = carregar_semana(semana)
+        dias = carregar_dia(dias)
         dia = dias[0]
         for dicio in estados:
             estado = list(dicio.keys())[0]
