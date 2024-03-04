@@ -13,8 +13,8 @@ from arquivos_json.save_and_load import (
     salvar_dia, carregar_dia,
     salvar_semana, carregar_semana
     )
-
 from time import sleep
+
 print('''\033[33m
 <<< CTRL + C para interromper >>>\033[m
 ''')
@@ -40,7 +40,7 @@ while True:
                 valor, devolucao = van.fazer_entrega(centro)  # Confere se haverá devolução. A chance de não haver é quase nula,
                 if valor == 'devolver':                       # mas ainda existe. Se isso é possível, então um dia irá acontecer.
                     van.devolver_entrega(devolucao, centro)
-                    caminhao.devolver_itens(devolucao, centro)
+                    caminhao.devolver_itens(centro)
                 if len(centro.itens) < 3000:
                     caminhao.abastecer_centro(estado, centro)
                 if len(estado.itens) < 5000:

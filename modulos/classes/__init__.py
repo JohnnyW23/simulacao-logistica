@@ -17,7 +17,9 @@ class Caminhao():
         print(f'''\033[36mENVIO DE MERCADORIAS\033[m''')
         envios = 0
         if len(destino.itens) < destino.estoque:  # Examina se o estoque do CD não estará cheio. Chance quase nula, mas possível.
-            for _ in range(randint(self.estoque - self.estoque // 5, self.estoque) * 4):
+            quantidade_itens = randint(self.estoque - self.estoque // 5, self.estoque) * randint(3, 5)
+            caminhoes = quantidade_itens // 750 + 1
+            for _ in range(quantidade_itens):
                 self.carga.append(mercadoria)  # Enchendo caminhões com itens da UT.
                 remetente.itens.pop(0)
                 envios += 1
@@ -32,6 +34,7 @@ class Caminhao():
                     print(f'Estoque de {destino.local} totalmente abastecido.')
                     break
             print(f'''
+Caminhões utilizados na operação: \033[33m{caminhoes}\033[m
 Mercadorias transferidas: \033[36m{envios}\033[m
 {remetente.local} >>> {destino.local}''')
             if len(self.carga) > 0:
@@ -46,19 +49,20 @@ Estoque de {destino.local}: {len(destino.itens)}''')
 Estoque de {destino.local} cheio! {wrn}''')
         sleep(1)
 
-    def devolver_itens(self, devolucao, remetente):
-        for item in devolucao:
-            remetente.itens.remove(item)
-            item.values() == True
-            remetente.estado.itens.append(item)
-            if len(remetente.itens) == 0:
-                print(f'''
+    def devolver_itens(self, remetente):
+        for item in remetente.itens:
+            if item.values() == False:
+                remetente.itens.remove(item)
+                item.values() == True
+                remetente.estado.itens.append(item)
+                if len(remetente.itens) == 0:
+                    print(f'''
 {remetente.local} sem mais itens para devolução.''')
-                break
-            elif len(remetente.estado.itens) == remetente.estado.estoque:
-                print(f'''
+                    break
+                elif len(remetente.estado.itens) == remetente.estado.estoque:
+                    print(f'''
 Estoque de {self.estado.local} totalmente abastecido.''')
-                break
+                    break
         print(f'''
 Mercadorias devolvidas:
 >>> {remetente.local} >>> {remetente.estado.local}''')
@@ -80,6 +84,7 @@ Estoque de {remetente.estado.local}: {len(remetente.estado.itens)}
         envios = 0
         if len(remetente.itens) > 0:
             quantidade = randint(12000, 16000)
+            caminhoes = quantidade // 750 + 1
             for _ in range(quantidade):
                 item = choice(remetente.itens)
                 self.carga.append(item)
@@ -93,6 +98,7 @@ Estoque de {remetente.estado.local}: {len(remetente.estado.itens)}
                 destino.itens.append(self.carga[0])
                 self.carga.pop(0)
             print(f'''
+Caminhões utilizados na operação: \033[33m{caminhoes}\033[m
 Mercadorias para abastecimento: \033[36m{envios}\033[m
 {remetente.local} >>> {destino.local}''')
             if len(self.carga) > 0:
@@ -119,7 +125,9 @@ class Van():
     
     def fazer_entrega(self, remetente):
         from random import randint
-        for _ in range(randint(self.estoque - self.estoque // 5, self.estoque) * 35):
+        quantidade_itens = randint(self.estoque - self.estoque // 5, self.estoque) * randint(30, 40)
+        vans = quantidade_itens // 100 + 1
+        for _ in range(quantidade_itens):
             self.entrega.append(mercadoria)
             remetente.itens.pop(0)
             if len(remetente.itens) == 0:
@@ -141,6 +149,7 @@ class Van():
 =====================================''')
         print(f'''\033[36mENTREGA EM DOMICÍLIOS\033[m
 
+Vans utilizadas na operação: \033[33m{vans}\033[m
 {tentativas} tentativas de entrega em:
 {endereco.endereco}
 
@@ -157,12 +166,13 @@ Devoluções: {devolvido}
     def devolver_entrega(self, devolucao, remetente):
         print('''=====================================''')
         print(f'\033[36mDEVOLUÇÃO DE ITENS\033[m')
+        itens = 0
         for item in devolucao:
             remetente.itens.append(item)
             if len(remetente.itens) == remetente.estoque:
                 print(f'''
 Estoque de {remetente.local} totalmente abastecido.''')
-        return devolucao
+        devolucao.clear()
 
 
 class UnidadeDeTratamento():
