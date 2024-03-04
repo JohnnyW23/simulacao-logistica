@@ -35,7 +35,6 @@ class Caminhao():
 Mercadorias transferidas: \033[36m{envios}\033[m
 {remetente.local} >>> {destino.local}''')
             if len(self.carga) > 0:
-                print(self.carga)
                 remetente.itens.extend(self.carga)
                 self.carga = []
                 print(f'Carga restante de {remetente.local} devolvida.')
@@ -64,7 +63,6 @@ Estoque de {self.estado.local} totalmente abastecido.''')
 Mercadorias devolvidas:
 >>> {remetente.local} >>> {remetente.estado.local}''')
         if len(self.carga) > 0:
-            print(self.carga)
             remetente.itens.extend(self.carga)
             self.carga = []
             print(f'''
@@ -98,7 +96,6 @@ Estoque de {remetente.estado.local}: {len(remetente.estado.itens)}
 Mercadorias para abastecimento: \033[36m{envios}\033[m
 {remetente.local} >>> {destino.local}''')
             if len(self.carga) > 0:
-                print(self.carga)
                 remetente.itens.extend(self.carga)
                 self.carga = []
                 print(f'''\033[36m
