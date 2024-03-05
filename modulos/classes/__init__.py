@@ -47,19 +47,21 @@ Estoque de {destino.local} cheio! {wrn}''')
         sleep(1)
 
     def devolver_itens(self, remetente):
-        for item in remetente.itens:
-            if item.values() == False:
-                remetente.itens.remove(item)
-                item.values() == True
-                remetente.estado.itens.append(item)
-                if len(remetente.itens) == 0:
-                    print(f'''
+        copia = remetente.itens[:]
+        for item in copia:
+            for k, v in item.items():
+                if v is False:
+                    remetente.estado.itens.append({k: True})
+                    if item in remetente.itens:
+                        remetente.itens.remove(item)
+                    if len(remetente.itens) == 0:
+                        print(f'''
 {remetente.local} sem mais itens para devolução.''')
-                    break
-                elif len(remetente.estado.itens) == remetente.estado.estoque:
-                    print(f'''
-Estoque de {self.estado.local} totalmente abastecido.''')
-                    break
+                        break
+                    elif len(remetente.estado.itens) == remetente.estado.estoque:
+                        print(f'''
+Estoque de {self.estado.local} totalmente abastecido.''')  # praticamente impossível de acontecer (cenário onde uma UT cheia
+                        break                                  # 
         print(f'''
 Mercadorias devolvidas:
 >>> {remetente.local} >>> {remetente.estado.local}''')
@@ -115,13 +117,14 @@ Não há itens no estoque de {remetente.local}! {wrn}
 
 
 class Van():
-    def __init__(self, estoque=100, entrega=[], devolver=[]):
+    def __init__(self, estoque=100, entrega=[], devolver=[], devolucao=[]):
         self.estoque = estoque
         self.entrega = entrega
         self.devolver = devolver
+        self.devolucao = devolucao
     
     def fazer_entrega(self, remetente):
-        from random import randint
+        from random import randint, shuffle
         quantidade_itens = randint(self.estoque - self.estoque // 5, self.estoque) * randint(30, 40)
         vans = quantidade_itens // 100 + 1
         for _ in range(quantidade_itens):
@@ -131,17 +134,23 @@ class Van():
                 break
         entregue = devolvido = 0
         tentativas = len(self.entrega)
+        endereco = Endereço(remetente.bairro, remetente.estado)
         for _ in range(len(self.entrega)):
-            endereco = Endereço(remetente.bairro, remetente.estado)
             chance = randint(1, 10)
             if chance == 1:
-                self.entrega[0].values() == False
-                self.devolver.append(self.entrega[0])
-                self.entrega.pop(0)
                 devolvido += 1
             else:
-                self.entrega.pop(0)
                 entregue += 1
+        shuffle(self.entrega)
+        c = 0
+        for _ in range(devolvido):
+            self.devolver.append(self.entrega[c])
+            c += 1
+        self.entrega.clear()
+        for item in self.devolver:
+            for k, v in item.items():
+                if v is True:
+                    self.devolucao.append({k: False})
         print('''
 =====================================''')
         print(f'''\033[36mENTREGA EM DOMICÍLIOS\033[m
@@ -154,8 +163,9 @@ Entregas: {entregue}
 Devoluções: {devolvido}
 ''')
         sleep(1)
-        if len(self.devolver) > 0:
-            devolucao = self.devolver[:]
+        if len(self.devolucao) > 0:
+            devolucao = self.devolucao[:]
+            self.devolucao.clear()
             self.devolver.clear()
             valor = 'devolver'
             return valor, devolucao
@@ -163,13 +173,10 @@ Devoluções: {devolvido}
     def devolver_entrega(self, devolucao, remetente):
         print('''=====================================''')
         print(f'\033[36mDEVOLUÇÃO DE ITENS\033[m')
-        itens = 0
-        for item in devolucao:
-            remetente.itens.append(item)
-            if len(remetente.itens) == remetente.estoque:
-                print(f'''
-Estoque de {remetente.local} totalmente abastecido.''')
-        devolucao.clear()
+        remetente.itens.extend(devolucao)
+        if len(remetente.itens) == remetente.estoque:
+            print(f'''
+Estoque de {remetente.local} totalmente abastecido.''')  # praticamente impossível de acontecer.
 
 
 class UnidadeDeTratamento():

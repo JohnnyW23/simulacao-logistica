@@ -8,7 +8,6 @@ def resetar(caminho):
         print(f"Erro ao resetar estoques: {e}")
 
 def recomecar():
-    import json
     resetar('arquivos_json/estoques/cd')
     resetar('arquivos_json/estoques/ut')
     resetar('arquivos_json/status_tempo')
