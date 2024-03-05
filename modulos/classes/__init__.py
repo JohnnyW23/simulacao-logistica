@@ -1,8 +1,5 @@
 from time import sleep
-from estoques.ut_estoque import estoque_ut
-from estoques.cd_estoque import estoque_cd
 
-mercadoria = {'item': True}  # Item padrão.
 wrn = '\033[31m#\033[m'
 # ^^^^ Só pra melhorar a estética do código quando uma mensagem de aviso ocorrer.
 
@@ -12,6 +9,7 @@ class Caminhao():
         self.carga = carga
 
     def enviar_itens(self, remetente, destino):
+        from gerador_de_itens import gerar_mercadoria
         from random import randint
         print('\033[34m=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=\033[m')
         print(f'''\033[36mENVIO DE MERCADORIAS\033[m''')
@@ -20,6 +18,7 @@ class Caminhao():
             quantidade_itens = randint(self.estoque - self.estoque // 5, self.estoque) * randint(3, 5)
             caminhoes = quantidade_itens // 750 + 1
             for _ in range(quantidade_itens):
+                mercadoria = gerar_mercadoria()
                 self.carga.append(mercadoria)  # Enchendo caminhões com itens da UT.
                 remetente.itens.pop(0)
                 envios += 1
@@ -124,10 +123,12 @@ class Van():
         self.devolver = devolver
     
     def fazer_entrega(self, remetente):
+        from gerador_de_itens import gerar_mercadoria
         from random import randint
         quantidade_itens = randint(self.estoque - self.estoque // 5, self.estoque) * randint(30, 40)
         vans = quantidade_itens // 100 + 1
         for _ in range(quantidade_itens):
+            mercadoria = gerar_mercadoria()
             self.entrega.append(mercadoria)
             remetente.itens.pop(0)
             if len(remetente.itens) == 0:
@@ -180,9 +181,10 @@ class UnidadeDeTratamento():
         self.estado = estado
         self.local = f'\033[35mUT {estado}\033[m'
         self.estoque = 90000
-        self.itens = estoque_ut[:]
+        self.itens = []
     
     def abastecer_unidade(self):
+        from gerador_de_itens import gerar_mercadoria
         from random import randint
         from time import sleep
         print('''=====================================
@@ -190,6 +192,7 @@ class UnidadeDeTratamento():
         recebimento = 0
         abastecimento = randint(60000, 80000)
         for _ in range(abastecimento):
+            mercadoria = gerar_mercadoria()
             self.itens.append(mercadoria)  # O item padrão denominado lá no início.
             recebimento += 1
         print(f'''
@@ -202,12 +205,12 @@ Estoque de {self.local}: {len(self.itens)}
 
 
 class CentroDeDistribuicao():
-    def __init__(self, bairro, estado, estoque=20000, itens=estoque_cd[:]):
+    def __init__(self, bairro, estado, estoque=20000):
         self.local = f'\033[33mCD {bairro}\033[m'
         self.bairro = bairro
         self.estado = estado
         self.estoque = estoque
-        self.itens = itens
+        self.itens = []
 
 
 class Endereço():
@@ -216,3 +219,24 @@ class Endereço():
         self.estado = estado
         self.endereco = f'\033[32m{bairro} - {estado.estado}\033[m'
         self.recebimento = []
+
+
+def calcular_valor(unidade, centros):
+    from time import sleep
+    valor_unidade = 0
+    for item in unidade.itens:
+        valor_unidade += int(list(item.keys())[0])
+    valor = f'\033[32mR$\033[m{valor_unidade:,}'.replace(',', '.')
+    print(f'''
+=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=
+Valor do estoque de {unidade.local}:
+                    {valor}''')
+    for centro in centros:
+        valor_centro = 0
+        for item in centro.itens:
+            valor_centro += int(list(item.keys())[0])
+        valor = f'\033[32mR$\033[m{valor_centro:,}'.replace(',', '.')
+        print(f'''Valor do estoque de {centro.local}:
+                    {valor}''')
+    print()
+    sleep(3)

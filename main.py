@@ -5,7 +5,7 @@ from modulos.objetos import (
     caminhao,
     van
     )
-from arquivos_json.save_and_load import (
+from modulos.save_and_load import (
     load_unidade_estoque,
     dump_unidade_estoque,
     load_centro_estoque,
@@ -13,6 +13,7 @@ from arquivos_json.save_and_load import (
     salvar_dia, carregar_dia,
     salvar_semana, carregar_semana
     )
+from modulos.classes import calcular_valor
 from time import sleep
 
 print('''\033[33m
@@ -46,6 +47,7 @@ while True:
                 if len(estado.itens) < 5000:
                     estado.abastecer_unidade()
                 sleep(1)
+            calcular_valor(estado, centros)
         if dia == 'SÁBADO':
             semana += 1
             salvar_semana(semana)

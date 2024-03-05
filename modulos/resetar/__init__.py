@@ -9,8 +9,8 @@ def resetar(caminho):
 
 def recomecar():
     import json
-    resetar('arquivos_json/estoques_json/cd')
-    resetar('arquivos_json/estoques_json/ut')
+    resetar('arquivos_json/estoques/cd')
+    resetar('arquivos_json/estoques/ut')
     resetar('arquivos_json/status_tempo')
     print("""
 Programa resetado com sucesso!
