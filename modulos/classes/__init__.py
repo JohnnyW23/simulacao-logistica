@@ -9,7 +9,6 @@ class Caminhao():
         self.carga = carga
 
     def enviar_itens(self, remetente, destino):
-        from gerador_de_itens import gerar_mercadoria
         from random import randint
         print('\033[34m=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=\033[m')
         print(f'''\033[36mENVIO DE MERCADORIAS\033[m''')
@@ -18,8 +17,7 @@ class Caminhao():
             quantidade_itens = randint(self.estoque - self.estoque // 5, self.estoque) * randint(3, 5)
             caminhoes = quantidade_itens // 750 + 1
             for _ in range(quantidade_itens):
-                mercadoria = gerar_mercadoria()
-                self.carga.append(mercadoria)  # Enchendo caminhões com itens da UT.
+                self.carga.append(remetente.itens[0])  # Enchendo caminhões com itens da UT.
                 remetente.itens.pop(0)
                 envios += 1
                 if len(remetente.itens) == 0:
@@ -123,13 +121,11 @@ class Van():
         self.devolver = devolver
     
     def fazer_entrega(self, remetente):
-        from gerador_de_itens import gerar_mercadoria
         from random import randint
         quantidade_itens = randint(self.estoque - self.estoque // 5, self.estoque) * randint(30, 40)
         vans = quantidade_itens // 100 + 1
         for _ in range(quantidade_itens):
-            mercadoria = gerar_mercadoria()
-            self.entrega.append(mercadoria)
+            self.entrega.append(remetente.itens[0])
             remetente.itens.pop(0)
             if len(remetente.itens) == 0:
                 break
