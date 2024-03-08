@@ -13,5 +13,4 @@ O programa salva automaticamente o estado da simulação a cada vez que se passa
 e Centros. Também salva em qual semana a simulação está. A semana é atualizada depois que o sábado (último dia da semana de atividades) termina.
 
 # Opção de resetar
-Caso desejado, você pode resetar todos os dados salvos indo no programa "resetar.py" e executando. Apenas os arquivos .json dos
-estoques seão resetados, e os arquivos .json referentes ao tempo serão modificados para o padrão determinado pela programação.
+Caso desejado, você pode resetar todos os dados salvos indo no programa "resetar.py" e executando. Os arquivos .json referentes aos estoques e ao tempo serão resetados (ou melhor dizendo, apagados).
